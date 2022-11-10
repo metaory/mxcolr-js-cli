@@ -1,0 +1,67 @@
+{
+  "name": "mxcolr",
+  "version": "0.63.8",
+  "description": "Generate, Preview and Apply beautiful unified human friendly pseudo random color schemes, SYSTEM WIDE!",
+  "main": "./bin/index.js",
+  "type": "module",
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "engines": {
+    "node": ">=0.16.5"
+  },
+  "bin": {
+    "mxcolr": "./bin/index.js",
+    "mxc": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin",
+    "build": "pkg bin/index.js --out-dir ./exec/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metaory/mxcolr-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "command-line",
+    "console",
+    "make",
+    "mxcolr",
+    "shell",
+    "task",
+    "task-manager",
+    "task-runner",
+    "term",
+    "terminal",
+    "tooling",
+    "tui"
+  ],
+  "author": "metaory <metaory@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "boxen": "^7.0.0",
+    "cli-highlight": "^2.1.11",
+    "clipboardy": "^3.0.0",
+    "dotenv": "^16.0.3",
+    "enquirer": "^2.3.6",
+    "figlet": "^1.5.2",
+    "gradient-string": "^2.0.1",
+    "omelette": "^0.4.17",
+    "ora": "^6.1.2",
+    "prettycli": "^1.4.3",
+    "simple-find-file-recursively-up": "^1.0.1-4",
+    "update-notifier": "^6.0.2",
+    "zx": "^7.0.8"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}
