@@ -46,7 +46,7 @@ Roadmap
 - [X] basic seed generation
 - [X] basic palette generation
 - [X] basic shade generation
-- [ ] basic export
+- [X] basic export
 - [ ] yaml config
 - [ ] template replacement
 - [ ] advance export
