@@ -1,13 +1,8 @@
-/* eslint-disable */
-import { colord, random, extend } from "colord";
-import mixPlugin from "colord/plugins/mix";
-
-extend([mixPlugin]);
-
+import { colord, random, extend } from 'colord'
+import mixPlugin from 'colord/plugins/mix'
 import demoPalette from './demo.js'
-// import {Chalk} from 'chalk'
 
-// const chalk = new Chalk({level: 3})
+extend([mixPlugin])
 
 const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
 
@@ -30,7 +25,7 @@ const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex()).m
 // const color = colord("#ff0000");
 // color.tones(3).map((c) => c.toHex()); // ["#ff0000", "#c86147", "#808080"];
 
-const paletteHue = { 'C01': 0, 'C02': 60, 'C03': 120, 'C04': 240, 'C05': 300, 'C06': 170 }
+const paletteHue = { C01: 0, C02: 60, C03: 120, C04: 240, C05: 300, C06: 170 }
 
 const generateColors = () => {
   Object.keys(paletteHue).forEach(x => { palette[x] = makeColor(paletteHue[x]) })
