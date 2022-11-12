@@ -30,14 +30,20 @@ const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex()).m
 // const color = colord("#ff0000");
 // color.tones(3).map((c) => c.toHex()); // ["#ff0000", "#c86147", "#808080"];
 
-const generateColors = () => {
-  palette['C01'] = makeColor(0)
-  palette['C02'] = makeColor(60)
-  palette['C03'] = makeColor(120)
-  palette['C04'] = makeColor(240)
-  palette['C05'] = makeColor(300)
-  palette['C06'] = makeColor(170)
+const paletteHue = { 'C01': 0, 'C02': 60, 'C03': 120, 'C04': 240, 'C05': 300, 'C06': 170 }
 
+const generateColors = () => {
+ Object.keys(paletteHue).forEach(x => { palette[x] = makeColor(paletteHue[x])})
+ Array.from({ length: 6 }).forEach((x, i) => {
+    if (i === 0) { return }
+    const name = (i + 8) >= 10 ? `C${i + 8}` : `C0${i + 8}`
+    palette[name] = colord(palette[`C0${i}`]).lighten(0.2).toHex()
+
+    palette[`CY${i}`] = colord(palette[`C0${i}`]).lighten(0.3).toHex()
+    palette[`CX${i}`] = colord(palette[`C0${i}`]).saturate(0.2).toHex()
+
+    console.log(i, '>>>', `C0${i}`, name)
+  })
 }
 
 const loadPalette = () => Object
