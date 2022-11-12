@@ -40,10 +40,19 @@ const generateColors = () => {
 const generateShade = (base) => {
   const shades = colord(palette[`${base}BG`])
     .shades(10)
-    .map((x, i) => x.desaturate(0.6).lighten(0.02).toHex())
-  Array.from({ length: 10 }).forEach((_, i) => {
-    palette[`${base}K${i}`] = shades[9 - i]
-  })
+  palette[`${base}K0`] = shades[9].lighten(0.01).toHex()
+  palette[`${base}K1`] = shades[8].desaturate(0.1).darken(0.04).toHex()
+  palette[`${base}K2`] = shades[7].desaturate(0.2).darken(0.05).toHex()
+  palette[`${base}K3`] = shades[6].desaturate(0.3).darken(0.05).toHex()
+  palette[`${base}K4`] = shades[5].desaturate(0.4).darken(0.05).toHex()
+  palette[`${base}K5`] = shades[4].desaturate(0.5).darken(0.05).toHex()
+  palette[`${base}K6`] = shades[3].desaturate(0.6).darken(0.06).toHex()
+  palette[`${base}K7`] = shades[2].desaturate(0.7).darken(0.07).toHex()
+  palette[`${base}K8`] = shades[1].desaturate(0.8).darken(0.08).toHex()
+  palette[`${base}K9`] = shades[0].desaturate(0.9).darken(0.09).toHex()
+  // Array.from({ length: 10 }).forEach((_, i) => {
+  //   palette[`${base}K${i}`] = shades[9 - i]
+  // })
 }
 const generateShades = () => {
   generateShade('S')
@@ -53,10 +62,9 @@ const generateShades = () => {
 
 const loadPalette = () => Object
   .keys(palette)
-  .forEach(x => process.env[x] = palette[x])
+  .forEach(x => { process.env[x] = palette[x] })
 
-export default async () => {
-  console.log('GENERATE', argv)
+export default async() => {
   generateSeed()
   generateColors()
   generateShades()
