@@ -33,17 +33,27 @@ const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex()).m
 const paletteHue = { 'C01': 0, 'C02': 60, 'C03': 120, 'C04': 240, 'C05': 300, 'C06': 170 }
 
 const generateColors = () => {
- Object.keys(paletteHue).forEach(x => { palette[x] = makeColor(paletteHue[x])})
- Array.from({ length: 6 }).forEach((x, i) => {
+  Object.keys(paletteHue).forEach(x => { palette[x] = makeColor(paletteHue[x]) })
+  Array.from({ length: 6 }).forEach((_, i) => {
     if (i === 0) { return }
-    const name = (i + 8) >= 10 ? `C${i + 8}` : `C0${i + 8}`
-    palette[name] = colord(palette[`C0${i}`]).lighten(0.2).toHex()
-
-    palette[`CY${i}`] = colord(palette[`C0${i}`]).lighten(0.3).toHex()
+    const baseName = (i + 8) >= 10 ? `C${i + 8}` : `C0${i + 8}`
+    palette[baseName] = colord(palette[`C0${i}`]).lighten(0.2).toHex()
     palette[`CX${i}`] = colord(palette[`C0${i}`]).saturate(0.2).toHex()
-
-    console.log(i, '>>>', `C0${i}`, name)
+    palette[`CY${i}`] = colord(palette[`C0${i}`]).lighten(0.3).toHex()
   })
+}
+const generateShade = (base) => {
+  const shades = colord(palette[`${base}BG`])
+    .shades(10)
+    .map((x, i) => x.desaturate(0.6).lighten(0.02).toHex())
+  Array.from({ length: 10 }).forEach((_, i) => {
+    palette[`${base}K${i}`] = shades[9 - i]
+  })
+}
+const generateShades = () => {
+  generateShade('S')
+  generateShade('W')
+  generateShade('E')
 }
 
 const loadPalette = () => Object
@@ -54,6 +64,7 @@ export default async () => {
   console.log('GENERATE', argv)
   generateSeed()
   generateColors()
+  generateShades()
   loadPalette()
   demoPalette()
 }

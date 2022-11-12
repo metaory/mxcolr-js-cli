@@ -42,7 +42,16 @@
 Roadmap
 =======
 
-- [ ] 
+- [ ] basic cli structure
+- [ ] basic seed generation
+- [ ] basic palette generation
+- [ ] basic shade generation
+- [ ] basic export
+- [ ] yaml config
+- [ ] template replacement
+- [ ] advance export
+- [ ] intro demo
+- [ ] completion
 
 ---
 
