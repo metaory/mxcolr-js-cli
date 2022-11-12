@@ -16,11 +16,10 @@ const print = {
     process.stdout.write('\n')
   },
   hex: (colors) => {
-    padLeft((colors.length * 5))
+    padLeft(colors.length * 7)
     colors.forEach(x => {
       const bg = process.env[x]
-      const fg = textColor(bg)
-      process.stdout.write(C.bgHex(bg).hex(fg)(' '+ x + ' '))
+      process.stdout.write(C.hex(bg)(bg.substring(1, bg.length)) + ' ')
     })
     process.stdout.write('\n')
   }
