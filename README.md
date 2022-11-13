@@ -22,7 +22,7 @@
     <img src="https://img.shields.io/npm/dm/mxcolr" alt="NPM Downloads"/>
   </a>
   <a href="https://github.com/metaory/mxcolr-cli/actions/workflows/main.yml">
-    <img src="https://img.shields.io/github/workflow/status/metaory/mxcolr-cli/MXFlow%20npm%20Package" alt="GH Status"/>
+    <img src="https://img.shields.io/github/workflow/status/metaory/mxcolr-cli/npm-package" alt="GH Status"/>
   </a>
   <a href="https://github.com/metaory/mxcolr-cli">
     <img src="https://img.shields.io/github/languages/code-size/metaory/mxcolr-cli" alt="Code Size"/>
