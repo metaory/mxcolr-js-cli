@@ -47,6 +47,7 @@ Roadmap
 - [X] basic palette generation
 - [X] basic shade generation
 - [X] basic export
+- [ ] readme usage
 - [ ] yaml config
 - [ ] template replacement
 - [ ] advance export
