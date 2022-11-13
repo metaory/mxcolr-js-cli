@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import pupa from 'pupa'
 
-export default async (palette) => {
+export default async(palette) => {
   console.log('APPLY')
 
   const getPath = (path) => resolve(
