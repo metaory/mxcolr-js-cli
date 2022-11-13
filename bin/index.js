@@ -4,6 +4,7 @@ import '../lib/globals.js'
 import '../lib/completion.js'
 import '../lib/header.js'
 import { mainMenu } from '../lib/menus.js'
+import { getConfig } from '../lib/config.js'
 
 import updateNotifier from 'update-notifier'
 
@@ -16,5 +17,5 @@ process.on('uncaughtException', $.verbose ? console.error : () => { })
 process.on('unhandledRejection', $.verbose ? console.error : () => { })
 process.on('SIGINT', process.exit)
 
-// global.cfg = await getConfig()
+global.cfg = await getConfig()
 mainMenu()
