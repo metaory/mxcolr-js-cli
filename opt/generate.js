@@ -1,6 +1,7 @@
 import { colord, random, extend } from 'colord'
 import mixPlugin from 'colord/plugins/mix'
 import demoPalette from './demo.js'
+import apply from './apply.js'
 import { generateMenu } from '../lib/menus.js'
 
 extend([mixPlugin])
@@ -21,13 +22,17 @@ const paletteHue = { C01: 0, C02: 60, C03: 120, C04: 240, C05: 300, C06: 170 }
 
 const generateColors = () => {
   Object.keys(paletteHue).forEach(x => { palette[x] = makeColor(paletteHue[x]) })
-  Array.from({ length: 6 }).forEach((_, i) => {
+  Array.from({ length: 7 }).forEach((_, i) => {
     if (i === 0) { return }
     const baseName = (i + 8) >= 10 ? `C${i + 8}` : `C0${i + 8}`
     palette[baseName] = colord(palette[`C0${i}`]).lighten(0.2).toHex()
     palette[`CX${i}`] = colord(palette[`C0${i}`]).saturate(0.2).toHex()
     palette[`CY${i}`] = colord(palette[`C0${i}`]).lighten(0.3).toHex()
   })
+  palette.C00 = 'WK2'
+  palette.C08 = 'WK5'
+  palette.C07 = 'WK6'
+  palette.C15 = 'WK8'
 }
 const generateShade = (base) => {
   const shades = colord(palette[`${base}BG`])
@@ -54,32 +59,26 @@ const generateShades = () => {
 
 const loadPalette = () => Object
   .keys(palette)
-  .forEach(x => { process.env[x] = palette[x] })
-
-const generate = () => {
-  generateSeed()
-  generateColors()
-  generateShades()
-  loadPalette()
-}
-const apply = () => {
-  loadPalette()
-  // savePalette() // TODO:
-}
+  .forEach(async x => {
+    await $`export ${x}='${palette[x]}'`
+    // process.env[x] = palette[x]
+  })
 
 const init = async() => {
   const action = await generateMenu()
   switch (action) {
-    case 'next':
-      generate()
-      demoPalette()
+    case 'make':
+      generateSeed()
+      generateColors()
+      generateShades()
+      loadPalette()
+      demoPalette(palette)
       init()
       break
     case 'apply':
-      apply()
+      apply(palette)
       break
   }
-  generate()
 }
 
 export default async() => {

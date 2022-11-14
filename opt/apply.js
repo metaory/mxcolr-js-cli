@@ -18,7 +18,7 @@ export default async(palette) => {
   const tplPath = getPath(`../templates/${input}`)
   const file = fs.readFileSync(tplPath, { encoding: 'utf8' })
 
-  const parsed = pupa(file, process.env)
+  const parsed = pupa(file, palette)
 
   const { writeTpl } = await confirmInput('writeTpl', `apply ${tpl}?`)
   if (writeTpl) {

@@ -8,28 +8,28 @@ const padLeft = (len) => {
 const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
 
 const print = {
-  dots: (colors) => {
+  dots: (colors, palette) => {
     padLeft(colors.length * 2)
     colors.forEach(x => {
-      process.stdout.write(C.hex(process.env[x])(' '))
+      process.stdout.write(C.hex(palette[x])(' '))
     })
     process.stdout.write('\n')
   },
-  hex: (colors) => {
+  hex: (colors, palette) => {
     padLeft(colors.length * 7)
     colors.forEach(x => {
-      const bg = process.env[x]
+      const bg = palette[x]
       process.stdout.write(C.hex(bg)(bg.substring(1, bg.length)) + ' ')
     })
     process.stdout.write('\n')
   }
 }
 
-const demoSeed = () => {
+const demoSeed = (palette) => {
   padLeft(12)
-  process.stdout.write(C.hex(process.env.SBG)('▄▄█'))
-  process.stdout.write(C.hex(process.env.WBG)('██'))
-  process.stdout.write(C.hex(process.env.EBG)('█▀▀'))
+  process.stdout.write(C.hex(palette.SBG)('▄▄█'))
+  process.stdout.write(C.hex(palette.WBG)('██'))
+  process.stdout.write(C.hex(palette.EBG)('█▀▀'))
   process.stdout.write('\n')
 }
 const colorNames = [
@@ -42,15 +42,15 @@ const colorNames = [
   ['WK0', 'WK1', 'WK2', 'WK3', 'WK4', 'WK5', 'WK6', 'WK7'],
   ['EK0', 'EK1', 'EK2', 'EK3', 'EK4', 'EK5', 'EK6', 'EK7']
 ]
-const demoHex = () => {
-  colorNames.forEach(x => print.hex(x))
+const demoHex = (palette) => {
+  colorNames.forEach(x => print.hex(x, palette))
 }
-const demoDots = () => {
-  demoSeed()
-  colorNames.forEach(x => print.dots(x))
+const demoDots = (palette) => {
+  demoSeed(palette)
+  colorNames.forEach(x => print.dots(x, palette))
 }
 
-export default async () => {
-  demoDots()
-  demoHex()
+export default async (palette) => {
+  demoDots(palette)
+  demoHex(palette)
 }
