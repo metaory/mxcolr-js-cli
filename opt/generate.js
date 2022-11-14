@@ -1,6 +1,7 @@
 import { colord, random, extend } from 'colord'
 import mixPlugin from 'colord/plugins/mix'
 import demoPalette from './demo.js'
+import { generateMenu } from '../lib/menus.js'
 
 extend([mixPlugin])
 
@@ -9,21 +10,12 @@ const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
 const palette = {}
 
 const generateSeed = () => ['S', 'W', 'E'].forEach(x => {
-  // colord("#3296fa").delta("#197dc8"); // 0.099
+  // TODO: colord("#3296fa").delta("#197dc8"); // 0.099
   palette[x + 'BG'] = random().toHex()
   palette[x + 'FG'] = textColor(palette[x + 'BG'])
 })
 
-// const getMixed = (base, color, ratio = 0.5) => colord(base).mix(color, ratio).toHex()
-// const getHued = (color, hue) => color.hue(hue).toHex()
-// const makeColor = (hue) => getMixed(getHued(colord('hsl(0, 50%, 50%)'), hue), palette.SBG, 0.3)
-
 const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex()).mix(palette.SBG, 0.3).toHex()
-//
-// colord("#cd853f").mix("#eee8aa", 0.6).toHex(); // "#e3c07e"
-// colord("#008080").mix("#808000", 0.35).toHex(); // "#50805d"
-// const color = colord("#ff0000");
-// color.tones(3).map((c) => c.toHex()); // ["#ff0000", "#c86147", "#808080"];
 
 const paletteHue = { C01: 0, C02: 60, C03: 120, C04: 240, C05: 300, C06: 170 }
 
@@ -64,10 +56,32 @@ const loadPalette = () => Object
   .keys(palette)
   .forEach(x => { process.env[x] = palette[x] })
 
-export default async() => {
+const generate = () => {
   generateSeed()
   generateColors()
   generateShades()
   loadPalette()
-  demoPalette()
+}
+const apply = () => {
+  loadPalette()
+  // savePalette() // TODO:
+}
+
+const init = async() => {
+  const action = await generateMenu()
+  switch (action) {
+    case 'next':
+      generate()
+      demoPalette()
+      init()
+      break
+    case 'apply':
+      apply()
+      break
+  }
+  generate()
+}
+
+export default async() => {
+  init()
 }
