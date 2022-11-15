@@ -16,7 +16,9 @@ const generateSeed = () => ['S', 'W', 'E'].forEach(x => {
   palette[x + 'FG'] = textColor(palette[x + 'BG'])
 })
 
-const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex()).mix(palette.SBG, 0.3).toHex()
+const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex())
+  .mix(palette.SBG, 0.3)
+  .toHex()
 
 const paletteHue = { C01: 0, C02: 60, C03: 120, C04: 240, C05: 300, C06: 170 }
 
@@ -29,10 +31,10 @@ const generateColors = () => {
     palette[`CX${i}`] = colord(palette[`C0${i}`]).saturate(0.2).toHex()
     palette[`CY${i}`] = colord(palette[`C0${i}`]).lighten(0.3).toHex()
   })
-  palette.C00 = 'WK2'
-  palette.C08 = 'WK5'
-  palette.C07 = 'WK6'
-  palette.C15 = 'WK8'
+  palette.C00 = palette.WK2
+  palette.C08 = palette.WK5
+  palette.C07 = palette.WK6
+  palette.C15 = palette.WK8
 }
 const generateShade = (base) => {
   const shades = colord(palette[`${base}BG`])
@@ -69,8 +71,8 @@ const init = async() => {
   switch (action) {
     case 'make':
       generateSeed()
-      generateColors()
       generateShades()
+      generateColors()
       loadPalette()
       demoPalette(palette)
       init()
