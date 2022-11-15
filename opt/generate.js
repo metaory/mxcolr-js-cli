@@ -4,7 +4,8 @@ import labPlugin from 'colord/plugins/lab'
 import demoPalette from './demo.js'
 import apply from './apply.js'
 import { generateMenu } from '../lib/menus.js'
-const MIN_DISTANCE = Number(process.env.MXC_MIN_DISTANCE) || 0.3
+const ALPHA_DISTANCE = Number(process.env.MXC_ALPHA_DISTANCE) || 0.5
+const DELTA_DISTANCE = Number(process.env.MXC_DELTA_DISTANCE) || 0.3
 
 extend([mixPlugin, labPlugin])
 
@@ -18,14 +19,23 @@ const generateSeed = () => {
     palette[x + 'BG'] = random().toHex()
     palette[x + 'FG'] = textColor(palette[x + 'BG'])
   })
+
+  // VIOLATIONS
+  const alpha = [
+    colord(palette.SBG).alpha(),
+    colord(palette.SBG).alpha(),
+    colord(palette.WBG).alpha()
+  ]
+  const alphaViolation = alpha.some(x => x > ALPHA_DISTANCE)
+
   const delta = [
     colord(palette.SBG).delta(palette.WBG),
     colord(palette.SBG).delta(palette.EBG),
     colord(palette.WBG).delta(palette.EBG)
   ]
-  const deltaViolation = delta.some(x => x < MIN_DISTANCE)
+  const deltaViolation = delta.some(x => x < DELTA_DISTANCE)
 
-  if (deltaViolation) {
+  if (alphaViolation || deltaViolation) {
     count++
     return generateSeed()
   } else {
