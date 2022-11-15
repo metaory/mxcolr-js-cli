@@ -4,9 +4,9 @@ import labPlugin from 'colord/plugins/lab'
 import demoPalette from './demo.js'
 import apply from './apply.js'
 import { generateMenu } from '../lib/menus.js'
-const ALPHA_DISTANCE = Number(process.env.MXC_ALPHA_DISTANCE) || 0.5
+const ALPHA_DISTANCE = Number(process.env.MXC_ALPHA_DISTANCE) || 0.8
 const DELTA_DISTANCE = Number(process.env.MXC_DELTA_DISTANCE) || 0.3
-
+const MAX_REDO = 100
 extend([mixPlugin, labPlugin])
 
 const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
@@ -26,7 +26,7 @@ const generateSeed = () => {
     colord(palette.SBG).alpha(),
     colord(palette.WBG).alpha()
   ]
-  const alphaViolation = alpha.some(x => x > ALPHA_DISTANCE)
+  const alphaViolation = alpha.every(x => x < ALPHA_DISTANCE)
 
   const delta = [
     colord(palette.SBG).delta(palette.WBG),
@@ -35,6 +35,10 @@ const generateSeed = () => {
   ]
   const deltaViolation = delta.some(x => x < DELTA_DISTANCE)
 
+  if (count >= MAX_REDO) {
+    L.warn('reached maximum redo: ' + MAX_REDO)
+    return
+  }
   if (alphaViolation || deltaViolation) {
     count++
     return generateSeed()
