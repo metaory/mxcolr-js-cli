@@ -1,11 +1,11 @@
-/* eslint-disable */
-import { colord } from "colord"
+// import { colord } from 'colord'
+import gradient from 'gradient-string'
 
 const padLeft = (len) => {
   const spaceLength = (process.stdout.columns - len) / 2
   process.stdout.write(' '.repeat(spaceLength))
 }
-const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
+// const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
 
 const print = {
   dots: (colors, palette) => {
@@ -50,7 +50,13 @@ const demoDots = (palette) => {
   colorNames.forEach(x => print.dots(x, palette))
 }
 
-export default async (palette) => {
+const printLine = (palette) => {
+  const { SBG = '#000', WBG = '#000', EBG = '#000' } = palette
+  console.log(gradient([SBG, WBG, EBG])(fillFrom('━'))) // mind, retro
+}
+
+export default async(palette) => {
+  printLine(palette)
   demoDots(palette)
   demoHex(palette)
 }

@@ -1,20 +1,36 @@
 import { colord, random, extend } from 'colord'
 import mixPlugin from 'colord/plugins/mix'
+import labPlugin from 'colord/plugins/lab'
 import demoPalette from './demo.js'
 import apply from './apply.js'
 import { generateMenu } from '../lib/menus.js'
+const MIN_DISTANCE = Number(process.env.MXC_MIN_DISTANCE) || 0.3
 
-extend([mixPlugin])
+extend([mixPlugin, labPlugin])
 
 const textColor = (bgColor) => colord(bgColor).isDark() ? '#fff' : '#000'
 
 const palette = {}
 
-const generateSeed = () => ['S', 'W', 'E'].forEach(x => {
-  // TODO: colord("#3296fa").delta("#197dc8"); // 0.099
-  palette[x + 'BG'] = random().toHex()
-  palette[x + 'FG'] = textColor(palette[x + 'BG'])
-})
+let count = 0
+const generateSeed = () => {
+  ['S', 'W', 'E'].forEach(x => {
+    palette[x + 'BG'] = random().toHex()
+    palette[x + 'FG'] = textColor(palette[x + 'BG'])
+  })
+  const delta = {
+    SW: colord(palette.SBG).delta(palette.WBG),
+    SE: colord(palette.SBG).delta(palette.EBG),
+    WE: colord(palette.WBG).delta(palette.EBG)
+  }
+  if (Object.values(delta).some(x => x < MIN_DISTANCE)) {
+    count++
+    return generateSeed()
+  } else {
+    L.loading('redo', count)
+    count = 0
+  }
+}
 
 const makeColor = (hue) => colord(colord('hsl(0, 50%, 50%)').hue(hue).toHex())
   .mix(palette.SBG, 0.3)
@@ -62,11 +78,12 @@ const generateShades = () => {
 const loadPalette = () => Object
   .keys(palette)
   .forEach(async x => {
-    await $`export ${x}='${palette[x]}'`
-    // process.env[x] = palette[x]
+    const exp = `export ${x}='${palette[x]}'`
+    await $([exp])
+    process.env[x] = palette[x]
   })
 
-const init = async() => {
+const init = async () => {
   const action = await generateMenu()
   switch (action) {
     case 'make':
@@ -83,6 +100,6 @@ const init = async() => {
   }
 }
 
-export default async() => {
+export default async () => {
   init()
 }
