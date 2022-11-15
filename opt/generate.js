@@ -18,12 +18,14 @@ const generateSeed = () => {
     palette[x + 'BG'] = random().toHex()
     palette[x + 'FG'] = textColor(palette[x + 'BG'])
   })
-  const delta = {
-    SW: colord(palette.SBG).delta(palette.WBG),
-    SE: colord(palette.SBG).delta(palette.EBG),
-    WE: colord(palette.WBG).delta(palette.EBG)
-  }
-  if (Object.values(delta).some(x => x < MIN_DISTANCE)) {
+  const delta = [
+    colord(palette.SBG).delta(palette.WBG),
+    colord(palette.SBG).delta(palette.EBG),
+    colord(palette.WBG).delta(palette.EBG)
+  ]
+  const deltaViolation = delta.some(x => x < MIN_DISTANCE)
+
+  if (deltaViolation) {
     count++
     return generateSeed()
   } else {
