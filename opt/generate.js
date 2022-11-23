@@ -95,7 +95,10 @@ const loadPalette = () => Object
   .keys(palette)
   .forEach(async x => {
     const exp = `export ${x}='${palette[x]}'`
+    const { verbose } = $
+    $.verbose = false
     await $([exp])
+    $.verbose = verbose
     process.env[x] = palette[x]
   })
 
