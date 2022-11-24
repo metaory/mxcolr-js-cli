@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import '../lib/globals.js'
-// import '../lib/completion.js'
+import '../lib/completion.js'
 import '../lib/header.js'
 import { mainMenu } from '../lib/menus.js'
 import { getConfig } from '../lib/config.js'
