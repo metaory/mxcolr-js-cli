@@ -32,31 +32,38 @@ class Generate {
     return colord(bgColor).isDark() ? '#fff' : '#000'
   }
 
+  get alpha() {
+    return [
+      colord(this.palette.SBG).alpha(),
+      colord(this.palette.SBG).alpha(),
+      colord(this.palette.WBG).alpha()
+    ]
+  }
+
+  get delta() {
+    return [
+      colord(this.palette.SBG).delta(this.palette.WBG),
+      colord(this.palette.SBG).delta(this.palette.EBG),
+      colord(this.palette.WBG).delta(this.palette.EBG)
+    ]
+  }
+
   seed() {
     for (const base of ['S', 'W', 'E']) {
       this.palette[base + 'BG'] = random().toHex()
       this.palette[base + 'FG'] = this.textColor(this.palette[base + 'BG'])
     }
 
-    // VIOLATIONS
-    const alpha = [
-      colord(this.palette.SBG).alpha(),
-      colord(this.palette.SBG).alpha(),
-      colord(this.palette.WBG).alpha()
-    ]
-    const alphaViolation = alpha.every(x => x < this.ALPHA_DISTANCE)
-
-    const delta = [
-      colord(this.palette.SBG).delta(this.palette.WBG),
-      colord(this.palette.SBG).delta(this.palette.EBG),
-      colord(this.palette.WBG).delta(this.palette.EBG)
-    ]
-    const deltaViolation = delta.some(x => x < this.DELTA_DISTANCE)
-
+    // MAX REDO COUNT
     if (this.count >= this.MAX_REDO) {
       L.warn('reached maximum redo: ' + this.MAX_REDO)
       return
     }
+
+    // VIOLATIONS
+    const alphaViolation = this.alpha.every(x => x < this.ALPHA_DISTANCE)
+    const deltaViolation = this.delta.some(x => x < this.DELTA_DISTANCE)
+
     if (alphaViolation || deltaViolation) {
       this.count++
       return this.seed()
