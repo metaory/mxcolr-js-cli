@@ -1,6 +1,6 @@
 {
   "name": "mxcolr",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generate, Preview and Apply beautiful unified human friendly pseudo random color schemes, SYSTEM WIDE!",
   "main": "./bin/index.js",
   "type": "module",
