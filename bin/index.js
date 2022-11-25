@@ -4,7 +4,6 @@ import '../lib/globals.js'
 import '../lib/completion.js'
 import '../lib/header.js'
 import { mainMenu } from '../lib/menus.js'
-import { getConfig } from '../lib/config.js'
 
 import updateNotifier from 'update-notifier'
 
@@ -13,9 +12,9 @@ updateNotifier({
   updateCheckInterval: 0
 }).notify({ isGlobal: true })
 
-process.on('uncaughtException', $.verbose ? console.error : () => { })
-process.on('unhandledRejection', $.verbose ? console.error : () => { })
+const noop = () => {}
+process.on('uncaughtException', $.verbose ? console.error : noop)
+process.on('unhandledRejection', $.verbose ? console.error : noop)
 process.on('SIGINT', process.exit)
 
-global.cfg = await getConfig()
 mainMenu()
