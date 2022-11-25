@@ -3,13 +3,14 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import pupa from 'pupa'
 
+// --------------------------------------------------------------------------
 const printLine = () => console.log(C.grey(fillFrom('╸')))
 // --------------------------------------------------------------------------
-const resolvePath = (path) => resolve(dirname(fileURLToPath(import.meta.url)), path)
+const resolvePath = (p) => resolve(dirname(fileURLToPath(import.meta.url)), p)
 // --------------------------------------------------------------------------
-const writeFile = (outputPath, data) => {
-  fs.writeFileSync(outputPath, data)
-  L.info('done', outputPath)
+const writeFile = (p, data) => {
+  fs.writeFileSync(p, data)
+  L.info('done', p)
 }
 // --------------------------------------------------------------------------
 class Apply {

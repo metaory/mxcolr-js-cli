@@ -125,8 +125,8 @@ class Generate {
 
 const generate = new Generate()
 
-const init = async() => {
-  const action = await generateMenu()
+const init = async(action) => {
+  action = action ?? await generateMenu()
   switch (action) {
     case 'make':
       generate.seed()
@@ -142,4 +142,4 @@ const init = async() => {
   }
 }
 
-export default async() => init()
+export default () => init('make')
