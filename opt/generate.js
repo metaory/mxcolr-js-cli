@@ -127,8 +127,9 @@ const generate = new Generate()
 
 const init = async(action) => {
   action = action ?? await generateMenu()
+
   switch (action) {
-    case 'make':
+    case 'next':
       generate.seed()
       generate.shades()
       generate.colors()
@@ -142,4 +143,4 @@ const init = async(action) => {
   }
 }
 
-export default () => init('make')
+export default () => init('next')
