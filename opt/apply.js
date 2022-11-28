@@ -67,13 +67,14 @@ class Apply {
   }
 
   parseOutput(outputPath) {
+    L.loading('i', this.tplPath)
     const file = fs.readFileSync(this.tplPath, { encoding: 'utf8' })
     const parsed = pupa(file, this.palette)
-    L.loading('input', this.tplPath)
     return parsed
   }
 
   async writeOutput(outputPath, parsed) {
+    L.loading('o', outputPath)
     if (argv.f || argv.force) { return writeFile(outputPath, parsed) }
     const { writeTpl } = await confirmInput('writeTpl', `apply ${this.key}?`, true)
     if (writeTpl) {
