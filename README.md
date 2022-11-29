@@ -34,6 +34,11 @@
   :zap: ヘ Generate, Preview and Apply beautiful unified human friendly pseudo random color schemes, SYSTEM WIDE!
 </p>
 
+---
+
+![gifcast](https://raw.githubusercontent.com/wiki/metaory/mxcolr-cli/assets/gifcast.gif)
+
+---
 
 <p align="center">
   <img width="75%" src="https://raw.githubusercontent.com/wiki/metaory/mxcolr-cli/assets/screenshot.png">
